@@ -1,6 +1,6 @@
 This sub-folder contains the code for pre-processing the data extracted using the queries and using this to build and test the cohort identification algorithm. Before running any code in MATLAB, it should be ensured the current directory is set to the "Modeling" sub-folder within the "Cohort Identification Algorithm" folder.
 
-All the extracted data should be in the same directory as the "Modeling" sub-folder for their successful compilation. In each script, the"folder" variable should point to the path containing all of the extarcted .csv files. Detailed annotations are provided in each sub-routine in the lines starting with "%".
+All the extracted data should be in the same directory as the "Modeling" sub-folder for their successful compilation. If the folder containing the extracted data is different, then, in each script, the "folder" variable should point to the path containing all of the extracted .csv files. Detailed annotations are provided in each sub-routine in the lines starting with "%".
 
 The order in which the code should be run is:
 
