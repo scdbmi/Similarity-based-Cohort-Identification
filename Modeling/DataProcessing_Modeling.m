@@ -1,20 +1,24 @@
 % This code creates the same sized feature matrices for both the seed  
 % patients and the test patients and stores them in a single data file
-% "Data_Modeling.mat". Please ensure that the path is correctly set to the 
-% directory containing all the .csv files containing the OMOP CDM data 
-% before running this script. This should be the "Modeling"
-% sub-folder within the "Cohort Identification Algorithm" folder.
+% "Data_Modeling.mat".
 
 clear all; close all; clc;
 
+% Set the directory to the present working directory. This directory should
+% contain all the .csv files containing the OMOP CDM data. It is  
+% currently set to the present working directory (pwd). In case the .csv   
+% data files are stored in another directory, please provide the path of  
+% that directory instead of pwd.
+folder=pwd;
+
 % Load the seed patient data
-load('Seedpatients_data.mat');
+load([folder '\Seedpatients_data.mat']);
 labstart=4;labend=3+size(datalab,2);
 conceptidsseed=conceptids;
 dataseed=data;
 
 % Load EHR random sample data
-load('Randomsample_data.mat');
+load([folder '\Randomsample_data.mat']);
 conceptidsrand=conceptids;
 datarandold=data;
 
@@ -38,4 +42,4 @@ end
 
 % Save the data files created for the seed patient set and the EHR random 
 % sample in a single .mat file.
-save('Data_modeling.mat','dataseed','datarand','conceptidsseed','conceptidsrand','labstart','labend');
+save([folder '\Data_modeling.mat'],'dataseed','datarand','conceptidsseed','conceptidsrand','labstart','labend');
