@@ -7,41 +7,47 @@
 % should be the "Modeling_withoutlabs" sub-folder within the "Cohort 
 % Identification Algorithm" folder.
 
+clear all; close all; clc;
 
+% Set the directory to the present working directory. This directory should
+% contain all the .csv files containing the OMOP CDM data. It is  
+% currently set to the present working directory (pwd). In case the .csv   
+% data files are stored in another directory, please provide the path of  
+% that directory instead of pwd.
+folder=pwd;
 
 % Set the start date of the experiments to today's date, or the current
 % date.
-startdate=datetime('now','TimeZone','local','Format','mm-d-yyyy');
-
+startdate=datetime;
 
 %% Extract data from .csv files for the random sample of patients
 % Demographics
-    demo=readtable('Randomsample_demo.csv','ReadVariableNames',false);
-        if cell2mat(strfind(demo{1,1},'¿'))
-              temp=strsplit(num2str(table2array(demo{1,1})),'¿');
+    demo=readtable('Randomsample_demo.csv','ReadVariableNames',true);
+        if cell2mat(strfind(demo{1,1},'Â¿'))
+              temp=strsplit(num2str(table2array(demo{1,1})),'Â¿');
               demo{1,1}=temp(2);
         end
         
 % Conditions
-    cond=readtable('Randomsample_cond.csv','ReadVariableNames',false);
-        if cell2mat(strfind(cond{1,1},'¿'))
-              temp=strsplit(num2str(table2array(cond{1,1})),'¿');
+    cond=readtable('Randomsample_cond.csv','ReadVariableNames',true);
+        if cell2mat(strfind(cond{1,1},'Â¿'))
+              temp=strsplit(num2str(table2array(cond{1,1})),'Â¿');
               cond{1,1}=temp(2);
         end
     condcodes=unique(table2array(cond(:,2)));
     
 % Drugs
-    drugs=readtable('Randomsample_drugs.csv','ReadVariableNames',false);
-        if cell2mat(strfind(drugs{1,1},'¿'))
-              temp=strsplit(num2str(table2array(drugs{1,1})),'¿');
+    drugs=readtable('Randomsample_drugs.csv','ReadVariableNames',true);
+        if cell2mat(strfind(drugs{1,1},'Â¿'))
+              temp=strsplit(num2str(table2array(drugs{1,1})),'Â¿');
               drugs{1,1}=temp(2);
         end
     drugcodes=unique(table2array(drugs(:,2)));
 
 % Procedures       
-    proc=readtable('Randomsample_proc.csv','ReadVariableNames',false);
-        if cell2mat(strfind(proc{1,1},'¿'))
-              temp=strsplit(num2str(table2array(proc{1,1})),'¿');
+    proc=readtable('Randomsample_proc.csv','ReadVariableNames',true);
+        if cell2mat(strfind(proc{1,1},'Â¿'))
+              temp=strsplit(num2str(table2array(proc{1,1})),'Â¿');
               proc{1,1}=temp(2);
         end
     proccodes=unique(table2array(proc(:,2)));
@@ -54,7 +60,7 @@ subs=table2array(demo(:,1));
 data=zeros(size(subs,1),3+size(condcodes,1)+size(drugcodes,1)+size(proccodes,1));
 
 % Concatenate concept IDs.
-conceptids=cat(2,'Age','M','F',(condcodes)',(drugcodes)',(proccodes)');
+conceptids=cat(2,'Age','M','F',(cellstr(num2str(condcodes)))',(cellstr(num2str(drugcodes)))',(cellstr(num2str(proccodes)))');
 
 % Populate the data matrix with patient specific data abstractions and
 % summaries for each patient and each data type
@@ -63,8 +69,8 @@ for s=1:size(subs,1)
     start=0;
     
     % Demographics
-    demoind=demo(strmatch(table2array(subs(s,1)),table2array(demo(:,1))),:);
-    DoB=strcat(num2str(table2array(demoind(1,3))),'-1-',num2str(table2array(demoind(1,2))));
+    demoind=demo(strmatch(char(subs(s,1)),table2array(demo(:,1))),:);
+    DoB=strcat(num2str(table2array(demoind(1,3))),'/1/',num2str(table2array(demoind(1,2))));
     Age=datetime(startdate)-datetime(DoB); Age.Format='y'; Age=years(Age);
     data(s,start+1)=Age;
     if strmatch(table2array(demoind(1,4)),'M')
@@ -76,25 +82,25 @@ for s=1:size(subs,1)
     start=start+3;
     
     % Conditions
-    condind=cond(strmatch(table2array(subs(s,1)),table2array(cond(:,1))),:);
+    condind=cond(strmatch(char(subs(s,1)),table2array(cond(:,1))),:);
     for j=1:size(condcodes,1)
-        values=strmatch(table2array(condcodes(j,1)),table2array(condind(:,2)));
+        values=strmatch(char(condcodes(j,1)),table2array(condind(:,2)));
         data(s,start+j)= size(values,1);
     end
     start=start+size(condcodes,1);
     
     % Drugs
-    drugind=drugs(strmatch(table2array(subs(s,1)),table2array(drugs(:,1))),:);
+    drugind=drugs(strmatch(char(subs(s,1)),table2array(drugs(:,1))),:);
     for j=1:size(drugcodes,1)
-       values=drugind(strmatch(table2array(drugcodes(j,1)),table2array(drugind(:,2))),2);
+       values=drugind(strmatch(char(drugcodes(j,1)),table2array(drugind(:,2))),2);
        data(s,start+j)= size(values,1);
     end
     start=start+size(drugcodes,1);
     
     % Procedures
-    procind=proc(strmatch(table2array(subs(s,1)),table2array(proc(:,1))),:);
+    procind=proc(strmatch(char(subs(s,1)),table2array(proc(:,1))),:);
     for j=1:size(proccodes,1)
-        values=strmatch(table2array(proccodes(j,1)),table2array(procind(:,2)));
+        values=strmatch(char(proccodes(j,1)),table2array(procind(:,2)));
         data(s,start+j)= size(values,1);
     end
     start=start+size(proccodes,1);
