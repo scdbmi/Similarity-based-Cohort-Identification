@@ -1,6 +1,6 @@
-This sub-folder contains the code for pre-processing the data extracted using the queries and using this to build and test the cohort identification algorithm. Before running any code in MATLAB, it should be ensured the current directory is set to the "Modeling" sub-folder within the "Cohort Identification Algorithm" folder.
-
-All the extracted data should be in the same directory as the "Modeling" sub-folder for their successful compilation. In each script, the"folder" variable should point to the path containing all of the extarcted .csv files. Detailed annotations are provided in each sub-routine in the lines starting with "%".
+This sub-folder contains the code for pre-processing the data extracted using the queries and using this to build and test the cohort identification algorithm. Before running any code in MATLAB, it should be ensured the current directory is set to the "Modeling_withoutlabs" sub-folder within the "Cohort Identification Algorithm" folder.
+ 
+All the extracted data should be in the "Modeling_withoutlabs" sub-folder for the successful compilation of the code here. If the folder containing the extracted data is different, then, in each script, the "folder" variable should point to the path containing all of the extracted .csv files. Detailed annotations are provided in each sub-routine in the lines starting with "%".
 
 The order in which the code should be run is:
 
@@ -11,7 +11,7 @@ The order in which the code should be run is:
 
 Detailed descriptions of these codes are as follows:
 
-1. PreprocessingRandomsample.m: This code pre-processes the random sample set for the experiments and extracts all the data types from the set of n unknown test patients in the EHR. Before running this code, it should be ensured that the .csv files "Randomsample_demo.csv", "Randomsample_cond.csv", "Randomsample_drugs.csv", "Randomsample_labs.csv", and "Randomsample_proc.csv" have been successfully extracted and saved in the "Modeling" sub-folder (or whichever path variable "folder" points to). This code loads in data from these .csv files and extracts, abstracts, and summarizes all the data in one .mat file called "Randomsample_data.mat". 
+1. PreprocessingRandomsample.m: This code pre-processes the random sample set for the experiments and extracts all the data types from the set of n unknown test patients in the EHR. Before running this code, it should be ensured that the .csv files "Randomsample_demo.csv", "Randomsample_cond.csv", "Randomsample_drugs.csv", and "Randomsample_proc.csv" have been successfully extracted and saved in the "Modeling_withoutlabs" sub-folder (or whichever path variable "folder" points to). This code loads in data from these .csv files and extracts, abstracts, and summarizes all the data in one .mat file called "Randomsample_data.mat". 
 
 If the user already has previously extracted data to be used and does not extract data using the queries in the "Query" sub-folder, then the format this code expects for each of the data types is as follows:
 "Randomsample_demo.csv": [person_id],[year_of_birth],[month_of_birth],[gender_source_value]
@@ -19,7 +19,7 @@ If the user already has previously extracted data to be used and does not extrac
 "Randomsample_drugs.csv": [person_id],[drug_concept_id]
 "Randomsample_proc.csv": [person_id],[procedure_concept_id] 
 
-2. PreprocessingSeedpatients.m: This code pre-processes the seed patient set for the experiments and extracts all the data types from the set of seed patients in the EHR. Before running this code, it should be ensured that the .csv files "Seedpatients_demo.csv",  "Seedpatients_cond.csv", "Seedpatients_drugs.csv", "Seedpatients_labs.csv", and "Seedpatients_proc.csv" have been successfully extracted and saved in the "Modeling" sub-folder (or whichever path variable "folder" points to). This code loads in data from these .csv files and extracts, abstracts, and summarizes all the data in one .mat file called "Seedpatients_data.mat".
+2. PreprocessingSeedpatients.m: This code pre-processes the seed patient set for the experiments and extracts all the data types from the set of seed patients in the EHR. Before running this code, it should be ensured that the .csv files "Seedpatients_demo.csv",  "Seedpatients_cond.csv", "Seedpatients_drugs.csv", and "Seedpatients_proc.csv" have been successfully extracted and saved in the "Modeling_withoutlabs" sub-folder (or whichever path  variable "folder" points to). This code loads in data from these .csv files and extracts, abstracts, and summarizes all the data in one .mat file called "Seedpatients_data.mat".
 
 If the user already has previously extracted data to be used and does not extract data using the queries in the "Query" sub-folder, then the format this code expects for each of the data types is as follows:
 "Seedpatients_demo.csv": [person_id],[year_of_birth],[month_of_birth],[gender_source_value]
