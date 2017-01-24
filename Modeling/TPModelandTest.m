@@ -6,12 +6,16 @@
 % Precision (MAP), Mean Reciprocal Rate (MRR),and Optimal Area Under the 
 % Curve (AUC), all of which are saved in the "Results.mat" data. This 
 % script takes as input the number of patients in the test data set (or n) 
-% from the user. Please ensure that the path is correctly set to the 
-% directory containing all the .csv files containing the OMOP CDM data 
-% before running this script. This should be the "Modeling"
-% sub-folder within the "Cohort Identification Algorithm" folder.
+% from the user.
 
 clear all; close all; clc;
+
+% Set the directory to the present working directory. This directory should
+% contain all the .csv files containing the OMOP CDM data. It is  
+% currently set to the present working directory (pwd). In case the .csv   
+% data files are stored in another directory, please provide the path of  
+% that directory instead of pwd.
+folder=pwd;
 
 % Initialize the measurement metrics
 yoptimum=0;
@@ -31,7 +35,7 @@ MAP=0;
 MRR=0;
 
 % Load data for modeling
-load('Data_modeling.mat');
+load([folder '\Data_modeling.mat']);
 
 % Here, we want to include the presence/absence of each lab as a feature
 % in addition to actual value of that lab. Append lab presence/absence 
@@ -149,4 +153,4 @@ optimalAUC=optimalAUC/2;
 optimalx=optimalx/2;
 optimaldist=optimaldist/2;
 optimaly=optimaly/2;
-save('Results.mat','P5','P10','P20','P30','MAP','MRR','optimalAUC','optimaly');
+save([folder '\Results.mat'],'P5','P10','P20','P30','MAP','MRR','optimalAUC','optimaly');
