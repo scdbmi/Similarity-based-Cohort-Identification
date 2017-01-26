@@ -16,9 +16,11 @@ clear all; close all; clc;
 % that directory instead of pwd.
 folder=pwd;
 
-% Set the start date of the experiments to today's date, or the current
-% date.
-startdate=datetime;
+% Set the start date of the experiments to the recruitment date
+% input by the user.
+startdate=input('Enter the recruitment date for the cohort identification task in a mm/dd/yyyy format: \n (This would be today for real-time recruitment) \n','s');
+startdate=datetime(startdate);
+save('startdate.mat','startdate');
 
 %% Extract data from .csv files for the random sample of patients
 % Demographics
