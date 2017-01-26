@@ -16,9 +16,10 @@ clear all; close all; clc;
 % that directory instead of pwd.
 folder=pwd;
 
-% Set the start date of the experiments to today's date, or the current
-% date.
-startdate=datetime;
+% Load the recruitment date input by the user (during the execution of the
+% script PreprocessingRandomsample.m
+startdate=load('startdate.mat');
+startdate=startdate.startdate;
 
 %% Extract data from .csv files for seed patients
 % Demographics
